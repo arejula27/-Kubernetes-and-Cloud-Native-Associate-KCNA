@@ -41,6 +41,26 @@
 
 ## :small_blue_diamond: 1. Kubernetes Fundamentals - 46%
 
+### 1.1 Kuberenetes resources
+
+</details>
+
+
+<details>
+<summary>Pods</summary>
+<br>
+
+Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.
+ - [Pods in Kubernetes](https://kubernetes.io/docs/concepts/workloads/pods/)
+
+</details>
+
+
+### 1.2 Kubernetes architecture
+### 1.3 Kubernetes API
+### 1.4 Containers
+### 1.5 Scheduling
+
 ## :small_blue_diamond: 2. Container Orchestration - 22%
 
 ## :small_blue_diamond: 3. Cloud Native Architecture - 16%
