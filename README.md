@@ -7,7 +7,7 @@
 - Certification validity: 3 years
 - Prerequisite: None
 - Cost: $395 USD, 1 year exam eligibility, with a free retake within the year.
-- [Official KCNA curriculum](https://github.com/cncf/curriculum/blob/master/CKAD_Curriculum_v1.24.pdf)
+- [Official CKAD curriculum](https://github.com/cncf/curriculum/blob/master/CKAD_Curriculum_v1.24.pdf)
   
 ### Useful keys & Common accronyms in Kubernetes
 
