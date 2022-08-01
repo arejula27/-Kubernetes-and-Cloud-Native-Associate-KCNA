@@ -3,7 +3,7 @@
 ## Exam Brief
 
 - Duration : 2 hours
-- Performance-Based Exam 
+- Performance-Based Exam
 - Certification validity: 3 years
 - Prerequisite: None
 - Cost: $395 USD, 1 year exam eligibility, with a free retake within the year.
@@ -27,28 +27,22 @@
 - SLI = Service Level Indicators
 - SLA = Service Level Agreements
 
+## 1. Core concepts
 
-## :small_blue_diamond: 1. Aplication design and build
+### 1.2 Architecture
 
-### 1.1 Kuberenetes resources
+A cluster is formed by different nodes, where pods are deployed. The whole cluster
+is managed by the master.
 
-</details>
+Kubernetes is composed by:
 
+- API server: It is the component that allows us to comunicate with our cluster
+- etcd: It is a key-value distributed store, it sotores data to manage our cluster
+- kubelet: agent that runs on each node
+- comtainer runtime: software to run containers
+- controller: it orchestrait the cluster. If a node falls this component manage the situation
+- scheduler: It asigns tasks to nodes
 
-<details>
-<summary>Pods</summary>
-<br>
+Pods and services only runs on workers, teh master nodes only manage the cluster and had the API server.
 
-Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.
- - [Pods in Kubernetes](https://kubernetes.io/docs/concepts/workloads/pods/)
-
-</details>
-
-
-## :small_blue_diamond: 2. Application deployment
-
-## :small_blue_diamond: 3. Application observability and maintenance
-
-## :small_blue_diamond: 4. Application enviroment, configuratiob abd security 
-
-## :small_blue_diamond: 5. Service and networking
+Our client aplication is kubectl, it allows us to interact with our cluster.
