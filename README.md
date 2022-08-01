@@ -1,25 +1,14 @@
-# Kubernetes-and-Cloud-Native-Associate-KCNA
+# Certified Kubernetes Application Developer-CKAD
 
 ## Exam Brief
 
-- Duration : 1.5 hours
-<!-- Number of questions : ??? Multiple choice questions -->
-- Passing score: 75%
+- Duration : 2 hours
+- Performance-Based Exam 
 - Certification validity: 3 years
 - Prerequisite: None
-- Cost: $250 USD, 1 year exam eligibility, with a free retake within the year.
-- Result: Emailed 24 hours after exam completion
-- [Official KCNA curriculum](https://github.com/cncf/curriculum/blob/master/KCNA_Curriculum.pdf)
-- The exam consists of around 60 MCQ questions.
-
-  *Linux Foundation offer several discounts around the year such as CyberMonday, Kubecon and various other events - ensure to utilise these*
+- Cost: $395 USD, 1 year exam eligibility, with a free retake within the year.
+- [Official KCNA curriculum](https://github.com/cncf/curriculum/blob/master/CKAD_Curriculum_v1.24.pdf)
   
-- [ ] [Kubernetes Fundamentals - 46%](#small_blue_diamond-1-kubernetes-fundamentals---46)
-- [ ] [Container Orchestration - 22%](#small_blue_diamond-2-container-orchestration---22)
-- [ ] [Cloud Native Architecture - 16%](#small_blue_diamond-3-cloud-native-architecture---16)
-- [ ] [Cloud Native Observability - 8%](#small_blue_diamond-4-cloud-native-observability---8)
-- [ ] [Cloud Native Application Delivery - 8%](#small_blue_diamond-5-cloud-native-application-delivery---8)
-
 ### Useful keys & Common accronyms in Kubernetes
 
 - K8s = Kubernetes
@@ -39,7 +28,7 @@
 - SLA = Service Level Agreements
 
 
-## :small_blue_diamond: 1. Kubernetes Fundamentals - 46%
+## :small_blue_diamond: 1. Aplication design and build
 
 ### 1.1 Kuberenetes resources
 
@@ -56,15 +45,10 @@ Pods are the smallest deployable units of computing that you can create and mana
 </details>
 
 
-### 1.2 Kubernetes architecture
-### 1.3 Kubernetes API
-### 1.4 Containers
-### 1.5 Scheduling
+## :small_blue_diamond: 2. Application deployment
 
-## :small_blue_diamond: 2. Container Orchestration - 22%
+## :small_blue_diamond: 3. Application observability and maintenance
 
-## :small_blue_diamond: 3. Cloud Native Architecture - 16%
+## :small_blue_diamond: 4. Application enviroment, configuratiob abd security 
 
-## :small_blue_diamond: 4. Cloud Native Observability - 8%
-
-## :small_blue_diamond: 5. Cloud Native Application Delivery - 8%
+## :small_blue_diamond: 5. Service and networking
