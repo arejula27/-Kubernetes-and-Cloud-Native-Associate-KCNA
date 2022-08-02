@@ -103,23 +103,21 @@ Pods and services only runs on workers, teh master nodes only manage the cluster
 
 Our client aplication is kubectl, it allows us to interact with our cluster.
 
-<details>
-<summary>Files</summary>
-<br>
+#### Files
+
 The files has 4 root level atributes:
- - ApiVersion: version of kubernetes
- - kind: kind of resource which is described by the file (pod,service,etc.)
- - metadata: data about the object (labels, name, namespace). Labels are a dictonary key-value, anything could be set as key or value.
- - spec: Describing the resource, each resource has his own spec. For example a pod is described by its images and names of the containers.
+
+- ApiVersion: version of kubernetes
+- kind: kind of resource which is described by the file (pod,service,etc.)
+- metadata: data about the object (labels, name, namespace). Labels are a dictonary key-value, anything could be set as key or value.
+- spec: Describing the resource, each resource has his own spec. For example a pod is described by its images and names of the containers.
 For creating a resouce using a file use
+
  ```bash
 kubectl create -f file.yaml
 ```
-</details>
 
-<details>
-<summary>Pods</summary>
-<br>
+#### Pods
 
 Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.
 We can create one by the command
@@ -132,4 +130,5 @@ Primero se especifica el nombre y tras eso lam imagen que se quiera usar.
 
 - [Pods in Kubernetes](https://kubernetes.io/docs/concepts/workloads/pods/)
 
-</details>
+#### Replica set
+It is a controller which helpls us to have multiple instnaces of the same pod.
