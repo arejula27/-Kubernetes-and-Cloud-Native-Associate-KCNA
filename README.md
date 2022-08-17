@@ -83,6 +83,14 @@ or just editing the resource by:
 kubectl edit <resource> <name>
 ```
 
+### expose
+
+We can expose a resouce by creating a clusterIp:
+
+ ```bash
+kubectl expose <resource> <name> --name <name-clusterIP> --port <port> -f <file>
+```
+
 ## 1. Core concepts
 
 ### 1.2 Architecture
