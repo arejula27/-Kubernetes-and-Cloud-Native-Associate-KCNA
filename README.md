@@ -180,3 +180,17 @@ env:
 ```
 
 The first name is for the enviroment variable of the pod, after that we select choosing the value from the ConfigMap by the name and the key.
+
+#### ConfigMaps 
+Secrets have the same porpouse as ConfigMaps, however are more secure. We can define it in the same way as configMaps:
+```bash
+kubectl create secret generic <name> --from-literal <key>=<value>
+```
+There are several secret types, that we can see on the [Documentation](https://kubernetes.io/docs/concepts/configuration/secret/).
+We can use only one key for a pod or use the whole secret:
+```bash 
+envFrom:
+  - secretRef:
+      name: app-config
+```
+
