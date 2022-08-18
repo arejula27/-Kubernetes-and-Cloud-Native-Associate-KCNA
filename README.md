@@ -140,3 +140,43 @@ Primero se especifica el nombre y tras eso lam imagen que se quiera usar.
 
 #### Replica set
 It is a controller which helpls us to have multiple instnaces of the same pod.
+
+
+## 2. Configs
+#### ConfigMaps
+It allows us to create  a key-value map, where we can store different configuration info. Later we can use it for assinging values at enviroment variables in pods. [Documentation](https://kubernetes.io/docs/concepts/configuration/configmap/)
+We can create a config map by the command
+```bash
+kubectl create ConfigMap <name> --from-literal <key>=<value>
+```
+
+Another option is creating it by a file:
+```bash 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+```
+For using these values in another resource we must assign it like this:
+```bash 
+envFrom:
+  - configMapRef:
+      name: app-config
+      key: APP_COLOR
+```
+
+or 
+
+```bash 
+env:
+  - name: APP_COLOR
+    valueFrom:
+      configMapRef:
+        name: app-config
+        key: APP_COLOR
+```
+
+The first name is for the enviroment variable of the pod, after that we select choosing the value from the ConfigMap by the name and the key.
