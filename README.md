@@ -194,3 +194,25 @@ envFrom:
       name: app-config
 ```
 
+#### Security context
+Security  define the priviledge of the resource (user, SELonux, capabilites, etc.). More info in the [documentation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/). For establish a policy we can do it on files such as:
+
+```bash 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu-sleeper
+  name: ubuntu-sleeper
+spec:
+  securityContext:
+    runAsUser: 1010
+  containers:
+  - image: ubuntu
+    name: ubuntu-sleeper
+    command: ["sleep", "5000"]
+    securityContext:
+      capabilities:
+        add: ["SYS_TIME"]
+```
+Capabilities can be only defined a container level, while user can be establish at pod level.
