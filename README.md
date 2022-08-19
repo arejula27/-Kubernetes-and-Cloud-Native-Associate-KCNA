@@ -216,3 +216,12 @@ spec:
         add: ["SYS_TIME"]
 ```
 Capabilities can be only defined a container level, while user can be establish at pod level.
+#### Service account
+It provides acces to use the kubernetes API to different programs. Each service account has a token, stored as secret, which gives the acces to the API They can be deployed outside the cluster so we must give them the token manualy:
+```bash
+kubectl describe serviceaccount <name>
+kubectl describe secret <token-name>
+```
+
+If the service is inside the cluster we can just specify the service account at pod level:
+
