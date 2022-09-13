@@ -225,3 +225,54 @@ kubectl describe secret <token-name>
 
 If the service is inside the cluster we can just specify the service account at pod level:
 
+#### Resource limits
+Each node has different resource limits (Ram, Cpu, Storage, etc). The scheduler will assign pods into
+nodes whith availabilty (if a pod need 50Mb Ram but there are only 10 Mb available, the pod will be 
+located into another node). If there is no node available the pod will be set with state pending. 
+By default kubernetes consider 0.5 CPU, 256 Mi per pod. This is known as resouce request, the 
+minimun resources request by a pod. The unit of the CPU dependes of the provider. 
+We can modify the defaul value adding a field resources on the definition of the pod:
+
+```bash 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu-sleeper
+  name: ubuntu-sleeper
+spec: 
+  containers:
+  - image: ubuntu
+    name: ubuntu-sleeper
+    command: ["sleep", "5000"]
+    resource:
+      request:
+        memory: "1Gi"
+        cpu: 1
+```
+In Kubernetes two different units can be specify, 1 G meaning one gigabyte and 1 Gi meaning one Gibibyte
+
+Another interesting resouce field is limits. It specify the limits of containers within the pod:
+
+```bash 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu-sleeper
+  name: ubuntu-sleeper
+spec:
+  containers:
+  - image: ubuntu
+    name: ubuntu-sleeper
+    command: ["sleep", "5000"]
+    resource:
+      request:
+        memory: "1Gi"
+        cpu: 1
+      limits:
+        memory: "1Gi"
+        cpu: 1
+```
+A container can't use more CPU  that the specified, however the container can use more memory
+than its limit, if it does constantly, the pod will be terminated.
