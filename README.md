@@ -217,14 +217,33 @@ spec:
 ```
 Capabilities can be only defined a container level, while user can be establish at pod level.
 #### Service account
-It provides acces to use the kubernetes API to different programs. Each service account has a token, stored as secret, which gives the acces to the API They can be deployed outside the cluster so we must give them the token manualy:
+It provides acces to use the kubernetes API to different programs. Each service account has
+a token, stored as secret, which gives the acces to the API They can be deployed outside the
+cluster so we must give them the token manualy, for accesing it we can use:
 ```bash
 kubectl describe serviceaccount <name>
 kubectl describe secret <token-name>
 ```
+When a pod is created a service account is mounted, we can see it if we describe the pod.
+For services within the cluster we can mount our service account to our resources so  we
+dont need to specify it later manually. We cant change the service account mounted on a pod,
+inthat case we must delete and recreate the pod, however a Deployment will manage the situation
+deleting his pods for changing the serviceaccount.
 
-If the service is inside the cluster we can just specify the service account at pod level:
-
+```bash 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu-sleeper
+  name: ubuntu-sleeper
+spec: 
+  containers:
+  - image: ubuntu
+    name: ubuntu-sleeper
+    command: ["sleep", "5000"]
+  serviceAccountName: <name>
+```
 #### Resource limits
 Each node has different resource limits (Ram, Cpu, Storage, etc). The scheduler will assign pods into
 nodes whith availabilty (if a pod need 50Mb Ram but there are only 10 Mb available, the pod will be 
@@ -276,3 +295,53 @@ spec:
 ```
 A container can't use more CPU  that the specified, however the container can use more memory
 than its limit, if it does constantly, the pod will be terminated.
+
+#### Taints and tolerations
+Them are used to set restrictions on what pods can be scheduled on a pod.
+If there is no traint the schedulded would balance the pods across all the cluster.
+
+This configuration is useful when we have a node with resource for a especific activity 
+such as GPU por ML. If a taint is assigned to a node, the pods without a toleration for 
+taint can't be placed on that node.
+![](./images/taints-toleration.png)
+
+For assinging taints we can use the comand
+```bash
+kubectl taint nodes <node-name> key=value:taint-effect
+```
+
+If the pod don't tolerate a taint it will suffer a effect, there are three effects:
+ - **NoSchedule**: The pod will no be scheduled on that nod.
+ - **PreferNoSchedule**: The scheduler will try to not scheduled the pod on that node but
+ it is not guaranteed.
+ - **NoExecute**: New pods will no be scheduled on that node and existing pods will 
+ be terminated.
+
+To assign a toleration we must add a section to the specification of the pod:
+```bash 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu-sleeper
+  name: ubuntu-sleeper
+spec:
+  containers:
+  - image: ubuntu
+    name: ubuntu-sleeper
+    command: ["sleep", "5000"]
+  toleration:
+  - key: "<key>"
+    opertor: "Equal"
+    value: "<value>"
+    effect: "<taint-effect>"
+```
+
+Toleration do not tells the pod to go to a particular node, it restricts which pods can be 
+placed on it, for instance if we have a toleration to blue the pod can be scheduled on a node 
+with blue taint or without taints.
+
+For deleting a taint use the following command:
+```bash
+kubectl taint nodes <node-name> key=value:taint-effect-
+```
