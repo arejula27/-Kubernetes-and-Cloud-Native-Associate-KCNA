@@ -345,3 +345,28 @@ For deleting a taint use the following command:
 ```bash
 kubectl taint nodes <node-name> key=value:taint-effect-
 ```
+
+#### Node Selector
+Simple method which allows us to limit pods to run on specifics nodes. For doing it we use labels:
+```bash
+k label node <node> <key>=<value>
+```
+After that we use the field ```nodeSelector```:
+
+
+```bash 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper
+spec:
+  containers:
+  - image: ubuntu
+    name: ubuntu-sleeper
+  nodeSelector:
+    <key>=<value>
+```
+It is really simple, so node afinity allows us to elaborate more complex solutions.
+
+#### Node afinity
+
