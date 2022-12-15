@@ -401,4 +401,19 @@ The type of the node affinty defines de behaviour of the affinty, there are two 
     
 If a affinty is required and no node has the label, the pod will be not scheduled.
 
-
+## 3 Multi-containers Pods
+All the containers on the same pod has access among them using localhost address, so it is not 
+using a kubernetes service for contect them
+### Ambassador
+This container behaves as a proxy for applications such as data bases. If we had an application which
+stores information on a database depending of the stage of development (test, dev,production). We 
+should abstract that logic of selecting database of the app pod and create one for doing that. 
+The application pod would connect to localhost and the *Ambassador* will select the correct database.
+![](./images/ambassador-pattern.png)
+### Adapter
+An adapter container is used for formatting logs from different containers for processing the logs 
+before sending them to a log central server. The idea is to manage the logs and send all of them with 
+the same format, does not matter from which container or application they were prodeced.
+### Sidecar
+The sidecar pattern uses a container in the same pod as an application container for gathering logs 
+and sending them to a central log server.
