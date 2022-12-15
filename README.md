@@ -379,14 +379,15 @@ affinity:
                  -  matchExpressions:
 ```
 Here we can use the keys `key`,`operator` and `values` for selecting a list of labels.
-    - **key**: refers the labbel key.
-    - **Operator**: There are several options which are self described:
-        - In
-        - NotIn
-        - Exists: simple check if the label key exist, does not require a value
-        - DoesNotExists: simple check if the label key does not exist, does not require a value
-        - Gt
-        - Lt
+  - **key**: refers the labbel key.
+  - **Operator**: There are several options which are self described:
+    - In
+    - NotIn
+    - Exists: simple check if the label key exist, does not require a value
+    - DoesNotExists: simple check if the label key does not exist, does not require a value
+    - Gt
+    - Lt
+  - **values**: refers to a list of values 
 ```bash
 -  matchExpressions:
                     -  key: color
@@ -395,9 +396,9 @@ Here we can use the keys `key`,`operator` and `values` for selecting a list of l
                         - blue
 ```
 The type of the node affinty defines de behaviour of the affinty, there are two types:
-    - requiredDuringSchedulingIgnoredDuringExecution
-    - preferredDuringSchedulingIgnoredDuringExecution
-    - requiredDuringSchedulingRequiredDuringExecution (not currently available)
+  - requiredDuringSchedulingIgnoredDuringExecution
+  - preferredDuringSchedulingIgnoredDuringExecution
+  - requiredDuringSchedulingRequiredDuringExecution (not currently available)
     
 If a affinty is required and no node has the label, the pod will be not scheduled.
 
