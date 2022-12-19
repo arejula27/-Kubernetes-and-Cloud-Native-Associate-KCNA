@@ -520,4 +520,15 @@ spec:
         periodSeconds: 4
         failureThreshold: 3
 ```
-
+### Logs
+For viewing logs we use the command
+```bash
+kubectl logs <pod-name> 
+``` 
+If it is a multicontainer pod we should use 
+```bash
+kubectl logs <pod-name> <container-name>
+``` 
+### Monitor 
+There is a metric server per cluster, it works only on memory, dont store on disk. We can acces the
+metrcis via api http  or `kubectl top node`
