@@ -43,6 +43,7 @@ It give us all the resources of the specificated kind. More info with -o wide
 kubectl run <resource>
 ```
 
+
 It creates a resource, use  ```-o yaml --dry-run=client` for showing the yaml that creates the resource.
 
 ### describe
@@ -404,7 +405,26 @@ If a affinty is required and no node has the label, the pod will be not schedule
 
 ## 3 Multi-containers Pods
 All the containers on the same pod has access among them using localhost address, so it is not 
-using a kubernetes service for contect them
+using a kubernetes service for contect them.
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pod
+  name: yellow
+spec:
+  containers:
+    - image: busybox
+      name: lemon
+    - image: redis
+      name: gold
+status: {}
+```
+Important to know that the number of containers in a pod is inmutable so you can not change it
+with a `k apply`. The way to add or remove a container eithin a pod is deleting the pod and creating 
+a new one.
 ### Ambassador
 This container behaves as a proxy for applications such as data bases. If we had an application which
 stores information on a database depending of the stage of development (test, dev,production). We 
@@ -418,3 +438,86 @@ the same format, does not matter from which container or application they were p
 ### Sidecar
 The sidecar pattern uses a container in the same pod as an application container for gathering logs 
 and sending them to a central log server.
+
+### Init container
+By default every container inside a pod **MUST** be alive, if one fails or ends, the pod is deleted 
+and scheduled a new one with the same specs. Sometimes you need a pod that runs only one time at 
+the pod creation time. In this case we use an init container:
+```bash
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp-container
+        image: busybox:1.28
+        command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+      initContainers:
+      - name: init-myservice
+        image: busybox
+        command: ['sh', '-c', 'git clone <some-repository-that-will-be-used-by-application> ;']
+```
+The init container is executed before the rest of conatiners are started. We can have as many 
+init containers as we need. More info in the [kuberntes docs](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/)
+
+## Observability
+### Readiness  Livines 
+When a pod is ready any service attached will send traffic to it. Sometimes the app deployed on a
+pod needs more time for become available. There are many ways to check if an app is ready or not:
+ - Make an API endpoint /api/ready
+ - Custom script
+ - Check TCP connection
+For checking it from inside a pod we use the readinessProbe:
+ 
+```bash 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu-sleeper
+  name: ubuntu-sleeper
+spec: 
+  containers:
+  - image: ubuntu
+    name: ubuntu-sleeper
+    readinessProbe:
+        httpGet:
+            path: /api/ready
+            port: 8080  
+```
+The pod will not be set as ready until the readiness is acomplished.
+Some chekings that could be done are:
+ - httpGet
+ - tcpSocket
+ - exec 
+For configuring how the readinessProbe will be we can set:
+ - initialDelaySeconds: the initial delay before doing the probe
+ - periodSeconds: the time it will wait between attempts
+ - failureThreshold: times it will try,3 by default
+  
+# Livines
+  In some cases a docker container is running correctly but not the app. From kubernetes we can
+  check if an app is runnig as it is intended. Liveness is similar to readyness:
+```bash 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu-sleeper
+  name: ubuntu-sleeper
+spec: 
+  containers:
+  - image: ubuntu
+    name: ubuntu-sleeper
+    livenessProbe:
+        httpGet:
+            path: /api/healthy
+            port: 8080  
+        initialDelaySeconds:10
+        periodSeconds: 4
+        failureThreshold: 3
+```
+
